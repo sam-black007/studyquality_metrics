@@ -1,3 +1,5 @@
+# .gitignore for AI Study Focus Analyzer
+
 # Python
 __pycache__/
 *.py[cod]
@@ -20,39 +22,38 @@ wheels/
 .installed.cfg
 *.egg
 
-# Virtual Environment
+# Virtual environments
 venv/
 env/
 ENV/
 .venv
 
-# IDEs
+# IDE
 .vscode/
 .idea/
 *.swp
 *.swo
 *~
 
+# Data files (keep structure but ignore content)
+data/*.csv
+data/*.json
+data/training_data/**/*.png
+data/reports/
+
+# Model files (large binary files)
+models/*.h5
+models/*.pth
+models/*.pkl
+
+# Logs
+logs/*.log
+*.log
+
 # OS
 .DS_Store
 Thumbs.db
 
-# Data (keep structure, ignore content)
-data/sessions/*.csv
-data/sessions/*.json
-data/reports/*
-data/*.log
-
-# Models (keep directory, ignore large files)
-models/*.h5
-models/*.pb
-models/*.pth
-models/*.onnx
-
 # Temporary files
 *.tmp
 *.temp
-
-# Logs
-*.log
-logs/

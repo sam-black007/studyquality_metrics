@@ -1,161 +1,67 @@
 # Quick Start Guide
 
-Get up and running with AI Study Focus Monitor in 3 easy steps!
+## First-Time Setup
 
-## 📥 Installation
-
-### One-Click Setup (Recommended)
-
+### Step 1: Install Dependencies
 ```bash
-# Clone the repository
-git clone https://github.com/sam-black007/studyquality_metrics.git
-cd studyquality_metrics
-
-# Run automatic setup
-# For Windows:
-setup.bat
-
-# For macOS/Linux:
-chmod +x setup.sh
-./setup.sh
-```
-
-### Manual Setup
-
-```bash
-git clone https://github.com/sam-black007/studyquality_metrics.git
-cd studyquality_metrics
 pip install -r requirements.txt
 ```
 
----
+### Step 2: Collect Training Data
+```bash
+python collect_data.py
+```
 
-## 🚀 Usage
+**Instructions:**
+1. Select class 1 (STUDY)
+2. Open study materials (PDFs, code editors, documentation)
+3. Let it capture 50 samples (takes ~3 minutes)
+4. Repeat for other classes:
+   - Class 2: EDUCATIONAL_VIDEO (YouTube lectures, tutorials)
+   - Class 3: DISTRACTION_VIDEO (shorts, reels, entertainment)
+   - Class 4: SOCIAL_MEDIA (Twitter, Instagram, etc.)
+   - Class 5: OTHER (anything else)
 
-### Start Monitoring
+**Tip:** More diverse samples = better accuracy!
 
+### Step 3: Train the Model
+```bash
+python train_model.py
+```
+
+This takes 5-10 minutes. The model will be saved to `models/screen_classifier.h5`.
+
+### Step 4: Run the Application
 ```bash
 python main.py
 ```
 
-A dashboard window will appear showing:
-- 👁 Your attention state (Focused/Distracted/Drowsy)
-- 🖥 What's on your screen (Study/Video/Social Media)
-- 🎯 Real-time focus score (0-100)
-- ⏱ Session timer
+## Daily Usage
 
-### Using the Dashboard
+1. **Launch**: `python main.py`
+2. **Start**: Click "Start Monitoring"
+3. **Pause**: Press `Ctrl+P` anytime
+4. **Stop**: Click "Stop" when done
+5. **Report**: Click "Generate Report" to see your productivity summary
 
-- **Study** with the monitor running in the background
-- **Pause** when you take a break (button or Ctrl+Shift+P)
-- **End Session** when done studying
-- **View summary** showing your productivity stats
-
-### Generate Report
-
-After a study session:
-
-```bash
-python -m modules.report_generator
-```
-
-This creates visualizations and insights in `data/reports/`:
-- 📊 Time distribution pie chart
-- 📈 Focus score timeline
-- ⏰ Hourly productivity breakdown
-- 📝 Text summary with recommendations
-
----
-
-## ⚙️ Configuration
-
-Edit `config/settings.yaml` to customize:
-
-```yaml
-# Change capture interval (default: 7 seconds)
-screen_capture:
-  interval_seconds: 10
-
-# Adjust drowsiness threshold
-thresholds:
-  drowsiness_blink_rate: 25  # blinks per minute
-  
-# Change keyboard shortcuts
-hotkeys:
-  pause_resume: "ctrl+shift+p"
-```
-
----
-
-## 🔒 Privacy
-
-✅ **Everything runs offline** - no internet connection needed
-✅ **No images saved** - only metadata (timestamps, states, scores)
-✅ **Your data stays local** - stored in `data/` folder
-
----
-
-## 🆘 Troubleshooting
+## Troubleshooting
 
 ### Webcam not working
-- Check that your webcam is connected
-- Close other apps using the webcam
-- Try changing `device_id` in `config/settings.yaml`
+- Check if another app is using the webcam
+- Grant camera permissions to Python
 
-### Installation errors (Windows)
-- Enable Long Paths: [Guide](https://pip.pypa.io/warnings/enable-long-paths)
-- Run `setup.bat` as Administrator
-- Install [Visual C++ Redistributable](https://aka.ms/vs/17/release/vc_redist.x64.exe)
+### Model accuracy is poor
+- Collect more training samples (100+ per class recommended)
+- Ensure diverse examples in training data
+- Retrain the model
 
-### Low performance
-- Increase `screen_capture.interval_seconds` in config
-- Close other resource-intensive applications
+### High CPU usage
+- Increase `CAPTURE_INTERVAL` in `src/config.py`
+- Reduce webcam resolution
 
----
+## Tips for Best Results
 
-## 📖 Full Documentation
-
-For detailed information, see [README.md](README.md)
-
----
-
-## 💡 Tips for Best Results
-
-1. ✨ **Good lighting** - Keep your face well-lit
-2. 📷 **Position webcam** - Face the camera while studying
-3. ⏰ **Regular breaks** - Follow the Pomodoro technique (25min work, 5min break)
-4. 📊 **Review reports** - Check daily insights to optimize your schedule
-5. 🎯 **Set goals** - Aim for average focus score >70
-
----
-
-## 🗑️ Uninstallation
-
-### Easy Uninstall
-
-**Windows:**
-```bash
-uninstall.bat
-```
-
-**macOS/Linux:**
-```bash
-chmod +x uninstall.sh
-./uninstall.sh
-```
-
-The script will ask if you want to backup your data before removing.
-
-For detailed instructions, see [UNINSTALL.md](UNINSTALL.md)
-
----
-
-## 🤝 Support
-
-- 📧 Email: your.email@example.com
-- 🐛 Report bugs: [GitHub Issues](https://github.com/yourusername/study-focus-monitor/issues)
-- ⭐ Star the repo if you find it useful!
-
----
-
-**Happy studying! Stay focused and achieve your goals! 🎯📚**
+1. **Good lighting** helps face tracking accuracy
+2. **Position webcam** at eye level
+3. **Collect diverse training data** from different times of day
+4. **Review reports** to understand your productivity patterns
