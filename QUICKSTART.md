@@ -4,12 +4,12 @@ Get up and running with AI Study Focus Monitor in 3 easy steps!
 
 ## 📥 Installation
 
-### Method 1: From GitHub (Recommended)
+### One-Click Setup (Recommended)
 
 ```bash
 # Clone the repository
-git clone https://github.com/yourusername/study-focus-monitor.git
-cd study-focus-monitor
+git clone https://github.com/sam-black007/studyquality_metrics.git
+cd studyquality_metrics
 
 # Run automatic setup
 # For Windows:
@@ -20,19 +20,13 @@ chmod +x setup.sh
 ./setup.sh
 ```
 
-### Method 2: Direct Install with pip
+### Manual Setup
 
 ```bash
-pip install git+https://github.com/yourusername/study-focus-monitor.git
+git clone https://github.com/sam-black007/studyquality_metrics.git
+cd studyquality_metrics
+pip install -r requirements.txt
 ```
-
-### Method 3: Download Standalone Executable
-
-1. Go to [Releases](https://github.com/yourusername/study-focus-monitor/releases)
-2. Download `StudyFocusMonitor-v1.0.0-windows.zip`
-3. Extract and run `StudyFocusMonitor.exe`
-
-**No Python installation required!**
 
 ---
 
@@ -137,23 +131,22 @@ For detailed information, see [README.md](README.md)
 
 ## 🗑️ Uninstallation
 
-### Quick Removal
+### Easy Uninstall
 
-**If you cloned/downloaded:**
-Just delete the project folder!
-
-**If you used pip install:**
+**Windows:**
 ```bash
-pip uninstall study-focus-monitor
+uninstall.bat
 ```
 
-### Keep Your Data
-
-Before removing, copy your reports:
+**macOS/Linux:**
 ```bash
-# Your study reports are in:
-data/reports/
+chmod +x uninstall.sh
+./uninstall.sh
 ```
+
+The script will ask if you want to backup your data before removing.
+
+For detailed instructions, see [UNINSTALL.md](UNINSTALL.md)
 
 ---
 

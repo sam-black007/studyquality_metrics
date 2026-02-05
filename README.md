@@ -26,72 +26,51 @@ A local, offline desktop AI system that monitors your study focus using webcam-b
 
 ## 🚀 Quick Start
 
-### Method 1: One-Click Setup (Recommended for Beginners)
+### Easy Installation (Recommended)
 
 **Windows:**
 ```bash
-# 1. Download or clone this repository
-git clone https://github.com/yourusername/study-focus-monitor.git
-cd study-focus-monitor
-
-# 2. Run the setup script (installs everything automatically)
+git clone https://github.com/sam-black007/studyquality_metrics.git
+cd studyquality_metrics
 setup.bat
 ```
 
 **macOS/Linux:**
 ```bash
-# 1. Download or clone this repository
-git clone https://github.com/yourusername/study-focus-monitor.git
-cd study-focus-monitor
-
-# 2. Make setup script executable and run
+git clone https://github.com/sam-black007/studyquality_metrics.git
+cd studyquality_metrics
 chmod +x setup.sh
 ./setup.sh
 ```
 
-The setup script will:
-- ✅ Check Python installation
-- ✅ Upgrade pip
-- ✅ Install all dependencies
-- ✅ Create necessary directories
-- ✅ Verify installation
+The setup script will automatically install all dependencies and set everything up!
 
-### Method 2: Install Directly from GitHub
+### Manual Installation
 
 ```bash
-pip install git+https://github.com/yourusername/study-focus-monitor.git
+git clone https://github.com/sam-black007/studyquality_metrics.git
+cd studyquality_metrics
+pip install -r requirements.txt
+python main.py
 ```
 
-### Method 3: Manual Installation
+### Usage
 
-If you prefer to install manually:
+**Start monitoring:**
+```bash
+python main.py
+```
 
-1. **Clone the repository:**
-   ```bash
-   git clone https://github.com/yourusername/study-focus-monitor.git
-   cd study-focus-monitor
-   ```
+A dashboard will appear showing:
+- 👁 Your attention state (Focused/Distracted/Drowsy)
+- 🖥 Screen activity category
+- 🎯 Real-time focus score (0-100)
+- ⏱ Session timer
 
-2. **Install dependencies:**
-   ```bash
-   pip install -r requirements.txt
-   ```
-
-3. **Run the application:**
-   ```bash
-   python main.py
-   ```
-
-### Method 4: Standalone Executable (No Python Required!)
-
-Perfect for users who don't have Python installed:
-
-1. Go to [Releases](https://github.com/yourusername/study-focus-monitor/releases)
-2. Download `StudyFocusMonitor-Windows.zip` (or Mac/Linux version)
-3. Extract and double-click `StudyFocusMonitor.exe`
-4. Done! No installation needed.
-
-> **Note:** First launch may take 30-60 seconds as the app initializes.
+**Generate report:**
+```bash
+python -m modules.report_generator
+```
 
 ## 📁 Project Structure
 
@@ -190,55 +169,36 @@ python -m modules.dashboard
 
 ## 🗑️ Uninstallation
 
-### If Installed via Method 1, 3, or 4 (Cloned/Downloaded)
-
-Simply delete the project folder:
+### Easy Uninstall
 
 **Windows:**
 ```bash
-# Navigate to parent directory and delete
-cd "d:\"
-rmdir /s "test file"
+uninstall.bat
 ```
-
-Or just delete the folder manually in File Explorer.
 
 **macOS/Linux:**
 ```bash
-rm -rf /path/to/study-focus-monitor
+chmod +x uninstall.sh
+./uninstall.sh
 ```
 
-### If Installed via Method 2 (pip install)
+The uninstall script will:
+- Ask if you want to backup your data
+- Remove the application
+- Clean up pip installation (if any)
 
+### Manual Uninstall
+
+Simply delete the project folder:
 ```bash
-pip uninstall study-focus-monitor
+# Windows
+rmdir /s "studyquality_metrics"
+
+# macOS/Linux
+rm -rf studyquality_metrics
 ```
 
-### Removing Data Files
-
-By default, session logs and reports are stored in the `data/` folder. If you want to remove all your data:
-
-**Before uninstalling:**
-```bash
-# Backup your data (optional)
-cp -r data/sessions ~/backup/study-sessions
-cp -r data/reports ~/backup/study-reports
-
-# Or just delete everything
-rm -rf data/
-```
-
-### Clean Uninstall Checklist
-
-- [ ] Stop the application if it's running
-- [ ] Backup any reports you want to keep (from `data/reports/`)
-- [ ] Delete the project folder
-- [ ] (Optional) Uninstall Python dependencies if not used by other projects:
-  ```bash
-  pip uninstall opencv-python mediapipe tensorflow-cpu pandas matplotlib
-  ```
-
----
+**See [UNINSTALL.md](UNINSTALL.md) for detailed instructions.**
 
 ## 🛠️ Troubleshooting
 

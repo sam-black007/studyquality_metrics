@@ -1,11 +1,12 @@
 include README.md
 include LICENSE
 include QUICKSTART.md
-include BUILD_EXECUTABLE.md
-include CONTRIBUTING.md
+include UNINSTALL.md
 include requirements.txt
 include setup.bat
 include setup.sh
+include uninstall.bat
+include uninstall.sh
 recursive-include config *.yaml
 recursive-include data .gitkeep
 recursive-include models .gitkeep
