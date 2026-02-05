@@ -188,6 +188,58 @@ python -m modules.dashboard
 - Hourly productivity breakdown
 - Actionable insights and recommendations
 
+## 🗑️ Uninstallation
+
+### If Installed via Method 1, 3, or 4 (Cloned/Downloaded)
+
+Simply delete the project folder:
+
+**Windows:**
+```bash
+# Navigate to parent directory and delete
+cd "d:\"
+rmdir /s "test file"
+```
+
+Or just delete the folder manually in File Explorer.
+
+**macOS/Linux:**
+```bash
+rm -rf /path/to/study-focus-monitor
+```
+
+### If Installed via Method 2 (pip install)
+
+```bash
+pip uninstall study-focus-monitor
+```
+
+### Removing Data Files
+
+By default, session logs and reports are stored in the `data/` folder. If you want to remove all your data:
+
+**Before uninstalling:**
+```bash
+# Backup your data (optional)
+cp -r data/sessions ~/backup/study-sessions
+cp -r data/reports ~/backup/study-reports
+
+# Or just delete everything
+rm -rf data/
+```
+
+### Clean Uninstall Checklist
+
+- [ ] Stop the application if it's running
+- [ ] Backup any reports you want to keep (from `data/reports/`)
+- [ ] Delete the project folder
+- [ ] (Optional) Uninstall Python dependencies if not used by other projects:
+  ```bash
+  pip uninstall opencv-python mediapipe tensorflow-cpu pandas matplotlib
+  ```
+
+---
+
 ## 🛠️ Troubleshooting
 
 ### Webcam not detected

@@ -135,6 +135,28 @@ For detailed information, see [README.md](README.md)
 
 ---
 
+## 🗑️ Uninstallation
+
+### Quick Removal
+
+**If you cloned/downloaded:**
+Just delete the project folder!
+
+**If you used pip install:**
+```bash
+pip uninstall study-focus-monitor
+```
+
+### Keep Your Data
+
+Before removing, copy your reports:
+```bash
+# Your study reports are in:
+data/reports/
+```
+
+---
+
 ## 🤝 Support
 
 - 📧 Email: your.email@example.com

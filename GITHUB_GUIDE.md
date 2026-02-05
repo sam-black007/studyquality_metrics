@@ -193,4 +193,19 @@ git push
 
 ---
 
+## 🗑️ Uninstalling the App
+
+If users want to remove the app, they can find complete instructions in [UNINSTALL.md](UNINSTALL.md).
+
+**Quick removal:**
+- Just delete the project folder (if cloned)
+- Or run `pip uninstall study-focus-monitor` (if installed via pip)
+
+**To delete from GitHub:**
+1. Go to repository Settings
+2. Scroll to "Danger Zone"
+3. Click "Delete this repository"
+
+---
+
 **Congratulations! Your project is now on GitHub and ready for the world to use! 🎉**
