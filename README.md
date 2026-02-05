@@ -200,6 +200,27 @@ rm -rf studyquality_metrics
 
 **See [UNINSTALL.md](UNINSTALL.md) for detailed instructions.**
 
+---
+
+## ⚡ Performance Optimization
+
+The app is optimized to prevent CPU/GPU throttling:
+
+✅ **Low CPU Usage:** 15-25% average (target max 40%)  
+✅ **No GPU Load:** CPU-only processing by default  
+✅ **Optimized Settings:** Reduced FPS (15), frame skipping, longer intervals
+
+**Key optimizations:**
+- Processes every 2nd webcam frame (reduces load by 50%)
+- Screen capture every 10 seconds (not continuous)
+- Image downscaling before ML processing
+- Smart sleep delays to prevent continuous 100% CPU
+
+**Customization:**  
+Edit `config/settings.yaml` to tune performance for your system.
+
+**See [PERFORMANCE.md](PERFORMANCE.md) for detailed optimization guide.**
+
 ## 🛠️ Troubleshooting
 
 ### Webcam not detected
