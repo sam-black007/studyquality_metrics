@@ -1,0 +1,48 @@
+# AI Study Focus Monitor - Configuration File
+
+# Webcam settings
+webcam:
+  device_id: 0
+  fps: 30
+  width: 640
+  height: 480
+
+# Screen capture settings
+screen_capture:
+  interval_seconds: 7
+  monitor_index: 0
+
+# Focus calculation
+focus:
+  logging_interval_minutes: 1
+  score_smoothing_window: 5
+
+# Thresholds for attention detection
+thresholds:
+  drowsiness_blink_rate: 20  # blinks per minute
+  distraction_head_angle: 30  # degrees
+  eye_closed_duration: 2.0    # seconds
+  gaze_deviation_threshold: 0.3  # normalized (0-1)
+
+# Hotkeys (for pause/resume functionality)
+hotkeys:
+  pause_resume: "ctrl+shift+p"
+  end_session: "ctrl+shift+e"
+
+# Privacy settings
+privacy:
+  save_images: false
+  save_video: false
+  log_metadata_only: true
+
+# ML Model settings
+model:
+  classifier_path: "models/screen_classifier.h5"
+  confidence_threshold: 0.6
+  input_size: 224
+
+# Logging
+logging:
+  level: "INFO"
+  save_logs: true
+  log_file: "data/app.log"
