@@ -1,72 +1,85 @@
 #!/bin/bash
-# AI Study Focus Monitor - Easy Setup Script for macOS/Linux
+# AI Study Focus Analyzer - Unix Setup Script
+# This script automates the installation process
 
-echo "========================================"
-echo " AI Study Focus Monitor - Setup"
-echo "========================================"
+echo "============================================================"
+echo "  AI Study Focus Analyzer - Setup Wizard"
+echo "============================================================"
 echo ""
 
 # Check if Python is installed
 if ! command -v python3 &> /dev/null; then
-    echo "ERROR: Python 3 is not installed"
-    echo "Please install Python 3.10 or higher"
+    echo "[ERROR] Python 3 is not installed!"
+    echo ""
+    echo "Please install Python 3.8 or higher:"
+    echo "  - Ubuntu/Debian: sudo apt install python3 python3-pip python3-venv"
+    echo "  - macOS: brew install python3"
+    echo "  - Fedora: sudo dnf install python3"
     exit 1
 fi
 
-echo "[OK] Python is installed"
+echo "[OK] Python found"
 python3 --version
 echo ""
 
-# Upgrade pip
-echo "[1/4] Upgrading pip..."
-python3 -m pip install --upgrade pip --quiet
-echo "[OK] pip upgraded"
+# Create virtual environment
+echo "[1/5] Creating virtual environment..."
+if [ -d "venv" ]; then
+    echo "Virtual environment already exists. Skipping..."
+else
+    python3 -m venv venv
+    if [ $? -ne 0 ]; then
+        echo "[ERROR] Failed to create virtual environment!"
+        exit 1
+    fi
+    echo "[OK] Virtual environment created"
+fi
 echo ""
 
-# Install dependencies
-echo "[2/4] Installing dependencies (this may take 5-10 minutes)..."
-echo "This is downloading TensorFlow, OpenCV, MediaPipe and other libraries..."
-python3 -m pip install -r requirements.txt
+# Activate virtual environment and install dependencies
+echo "[2/5] Installing dependencies..."
+source venv/bin/activate
+pip install --upgrade pip
+pip install -r requirements.txt
 if [ $? -ne 0 ]; then
-    echo ""
-    echo "ERROR: Failed to install some dependencies"
-    echo ""
-    echo "Common fixes:"
-    echo "1. Install development tools: sudo apt-get install python3-dev (Ubuntu/Debian)"
-    echo "2. Use a virtual environment: python3 -m venv venv && source venv/bin/activate"
-    echo ""
+    echo "[ERROR] Failed to install dependencies!"
     exit 1
 fi
-echo "[OK] All dependencies installed"
+echo "[OK] Dependencies installed"
 echo ""
 
 # Create necessary directories
-echo "[3/4] Creating data directories..."
-mkdir -p data/sessions
+echo "[3/5] Creating project directories..."
+mkdir -p data/training_data
 mkdir -p data/reports
 mkdir -p models
+mkdir -p logs
 echo "[OK] Directories created"
 echo ""
 
-# Test import
-echo "[4/4] Verifying installation..."
-python3 -c "import cv2, mediapipe, numpy, pandas, matplotlib" 2>/dev/null
-if [ $? -ne 0 ]; then
-    echo "WARNING: Some imports failed, but you can still try running the app"
-else
-    echo "[OK] Core libraries verified"
-fi
+# Create run script
+echo "[4/5] Creating launcher script..."
+cat > run.sh << 'EOF'
+#!/bin/bash
+source venv/bin/activate
+python3 main.py
+EOF
+chmod +x run.sh
+echo "[OK] Launcher created (run.sh)"
 echo ""
 
-echo "========================================"
-echo " Installation Complete!"
-echo "========================================"
+# Final instructions
+echo "[5/5] Setup complete!"
 echo ""
-echo "To start monitoring, run:"
-echo "   python3 main.py"
+echo "============================================================"
+echo "  Installation Successful!"
+echo "============================================================"
 echo ""
-echo "To generate a report, run:"
-echo "   python3 -m modules.report_generator"
+echo "Next steps:"
+echo "  1. Run: python3 collect_data.py  (to collect training samples)"
+echo "  2. Run: python3 train_model.py   (to train the ML model)"
+echo "  3. Run: ./run.sh                 (to start the application)"
 echo ""
-echo "For help, see README.md"
+echo "To uninstall, run: ./uninstall.sh"
+echo "============================================================"
 echo ""

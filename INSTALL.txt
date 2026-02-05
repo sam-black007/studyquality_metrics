@@ -1,0 +1,145 @@
+# AI Study Focus Analyzer - Installation Guide
+
+## 📥 Installation Instructions
+
+### For Windows Users
+
+1. **Download the Project**
+   ```cmd
+   git clone https://github.com/sam-black007/studyquality_metrics.git
+   cd studyquality_metrics
+   ```
+
+2. **Run the Setup Script**
+   ```cmd
+   setup.bat
+   ```
+   
+   This will automatically:
+   - Check for Python installation
+   - Create a virtual environment
+   - Install all dependencies
+   - Create necessary directories
+   - Set up desktop shortcuts (optional)
+
+3. **Launch the Application**
+   - Double-click the desktop shortcut, OR
+   - Run: `run.bat`
+
+### For Linux/Mac Users
+
+1. **Download the Project**
+   ```bash
+   git clone https://github.com/sam-black007/studyquality_metrics.git
+   cd studyquality_metrics
+   ```
+
+2. **Run the Setup Script**
+   ```bash
+   chmod +x setup.sh
+   ./setup.sh
+   ```
+   
+   This will automatically:
+   - Check for Python installation
+   - Create a virtual environment
+   - Install all dependencies
+   - Create necessary directories
+   - Create launcher scripts
+
+3. **Launch the Application**
+   ```bash
+   ./run.sh
+   ```
+
+---
+
+## 🗑️ Uninstallation Instructions
+
+### For Windows Users
+
+Simply run:
+```cmd
+uninstall.bat
+```
+
+This will:
+- Remove the virtual environment
+- Delete generated data (with confirmation)
+- Remove desktop shortcuts
+- Clean up all installation files
+
+### For Linux/Mac Users
+
+Simply run:
+```bash
+chmod +x uninstall.sh
+./uninstall.sh
+```
+
+This will:
+- Remove the virtual environment
+- Delete generated data (with confirmation)
+- Clean up all installation files
+
+---
+
+## 📋 System Requirements
+
+- **Python**: 3.8 or higher
+- **RAM**: 4GB minimum (8GB recommended)
+- **Webcam**: Required for face tracking
+- **Storage**: 500MB free space
+- **OS**: Windows 10+, macOS 10.14+, or Linux
+
+---
+
+## 🔧 Manual Installation (Advanced)
+
+If the automatic scripts don't work:
+
+1. **Create Virtual Environment**
+   ```bash
+   python -m venv venv
+   ```
+
+2. **Activate Virtual Environment**
+   - Windows: `venv\Scripts\activate`
+   - Linux/Mac: `source venv/bin/activate`
+
+3. **Install Dependencies**
+   ```bash
+   pip install -r requirements.txt
+   ```
+
+4. **Run Application**
+   ```bash
+   python main.py
+   ```
+
+---
+
+## ❓ Troubleshooting
+
+### "Python not found"
+- Install Python from https://www.python.org/downloads/
+- Make sure to check "Add Python to PATH" during installation
+
+### "Permission denied" (Linux/Mac)
+```bash
+chmod +x setup.sh run.sh uninstall.sh
+```
+
+### Webcam not working
+- Grant camera permissions to Python/Terminal
+- Close other applications using the webcam
+
+### Installation fails
+- Try manual installation steps above
+- Check `logs/setup.log` for error details
+
+---
+
+## 📞 Support
+
+For issues, visit: https://github.com/sam-black007/studyquality_metrics/issues

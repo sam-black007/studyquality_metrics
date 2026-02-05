@@ -1,88 +1,104 @@
 @echo off
-REM AI Study Focus Monitor - Easy Setup Script for Windows
+REM AI Study Focus Analyzer - Windows Setup Script
 REM This script automates the installation process
 
-echo ========================================
-echo  AI Study Focus Monitor - Setup
-echo ========================================
+echo ============================================================
+echo   AI Study Focus Analyzer - Setup Wizard
+echo ============================================================
 echo.
 
 REM Check if Python is installed
 python --version >nul 2>&1
 if errorlevel 1 (
-    echo ERROR: Python is not installed or not in PATH
-    echo Please install Python 3.10 or higher from https://www.python.org/
-    echo Make sure to check "Add Python to PATH" during installation
+    echo [ERROR] Python is not installed or not in PATH!
+    echo.
+    echo Please install Python 3.8 or higher from:
+    echo https://www.python.org/downloads/
+    echo.
+    echo Make sure to check "Add Python to PATH" during installation.
     pause
     exit /b 1
 )
 
-echo [OK] Python is installed
+echo [OK] Python found
 python --version
 echo.
 
-REM Check Python version
-for /f "tokens=2" %%i in ('python --version 2^>^&1') do set PYTHON_VERSION=%%i
-echo Detected Python version: %PYTHON_VERSION%
-echo.
-
-REM Upgrade pip
-echo [1/4] Upgrading pip...
-python -m pip install --upgrade pip --quiet
-if errorlevel 1 (
-    echo WARNING: Could not upgrade pip, continuing anyway...
+REM Create virtual environment
+echo [1/6] Creating virtual environment...
+if exist venv (
+    echo Virtual environment already exists. Skipping...
 ) else (
-    echo [OK] pip upgraded
+    python -m venv venv
+    if errorlevel 1 (
+        echo [ERROR] Failed to create virtual environment!
+        pause
+        exit /b 1
+    )
+    echo [OK] Virtual environment created
 )
 echo.
 
-REM Install dependencies
-echo [2/4] Installing dependencies (this may take 5-10 minutes)...
-echo This is downloading TensorFlow, OpenCV, MediaPipe and other libraries...
-python -m pip install -r requirements.txt
+REM Activate virtual environment and install dependencies
+echo [2/6] Installing dependencies...
+call venv\Scripts\activate.bat
+pip install --upgrade pip
+pip install -r requirements.txt
 if errorlevel 1 (
-    echo.
-    echo ERROR: Failed to install some dependencies
-    echo.
-    echo Common fixes:
-    echo 1. Enable Windows Long Path support: https://pip.pypa.io/warnings/enable-long-paths
-    echo 2. Run this script as Administrator
-    echo 3. Install Visual C++ Redistributable if prompted
-    echo.
+    echo [ERROR] Failed to install dependencies!
     pause
     exit /b 1
 )
-echo [OK] All dependencies installed
+echo [OK] Dependencies installed
 echo.
 
 REM Create necessary directories
-echo [3/4] Creating data directories...
-if not exist "data\sessions" mkdir data\sessions
-if not exist "data\reports" mkdir data\reports
-if not exist "models" mkdir models
+echo [3/6] Creating project directories...
+if not exist data mkdir data
+if not exist data\training_data mkdir data\training_data
+if not exist data\reports mkdir data\reports
+if not exist models mkdir models
+if not exist logs mkdir logs
 echo [OK] Directories created
 echo.
 
-REM Test import
-echo [4/4] Verifying installation...
-python -c "import cv2, mediapipe, numpy, pandas, matplotlib" 2>nul
-if errorlevel 1 (
-    echo WARNING: Some imports failed, but you can still try running the app
+REM Create run script
+echo [4/6] Creating launcher script...
+(
+echo @echo off
+echo call venv\Scripts\activate.bat
+echo python main.py
+echo pause
+) > run.bat
+echo [OK] Launcher created (run.bat)
+echo.
+
+REM Create desktop shortcut (optional)
+echo [5/6] Desktop shortcut...
+set /p create_shortcut="Create desktop shortcut? (y/n): "
+if /i "%create_shortcut%"=="y" (
+    powershell -Command "$WshShell = New-Object -ComObject WScript.Shell; $Shortcut = $WshShell.CreateShortcut('%USERPROFILE%\Desktop\AI Study Focus.lnk'); $Shortcut.TargetPath = '%CD%\run.bat'; $Shortcut.WorkingDirectory = '%CD%'; $Shortcut.IconLocation = 'shell32.dll,21'; $Shortcut.Save()"
+    echo [OK] Desktop shortcut created
 ) else (
-    echo [OK] Core libraries verified
+    echo [SKIP] Desktop shortcut skipped
 )
 echo.
 
-echo ========================================
-echo  Installation Complete!
-echo ========================================
+REM Final instructions
+echo [6/6] Setup complete!
 echo.
-echo To start monitoring, run:
-echo    python main.py
+echo ============================================================
+echo   Installation Successful!
+echo ============================================================
 echo.
-echo To generate a report, run:
-echo    python -m modules.report_generator
+echo Next steps:
+echo   1. Run: collect_data.py  (to collect training samples)
+echo   2. Run: train_model.py   (to train the ML model)
+echo   3. Run: run.bat          (to start the application)
 echo.
-echo For help, see README.md
+echo Or double-click "run.bat" to launch the application.
+echo.
+echo To uninstall, run: uninstall.bat
+echo ============================================================
 echo.
 pause

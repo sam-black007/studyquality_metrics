@@ -1,0 +1,102 @@
+# Uninstallation Guide
+
+## How to Completely Remove AI Study Focus Analyzer
+
+### Windows Users
+
+1. **Run the Uninstall Script**
+   ```cmd
+   uninstall.bat
+   ```
+
+2. **Follow the Prompts**
+   - Confirm uninstallation (y/n)
+   - Choose whether to keep your data (y/n)
+
+3. **What Gets Removed**
+   - Virtual environment (`venv/` folder)
+   - Launcher script (`run.bat`)
+   - Desktop shortcut
+   - Python cache files
+   - **Optional**: Training data, models, and logs
+
+4. **Manual Cleanup (Optional)**
+   After running the uninstall script, you can delete the entire project folder if desired.
+
+---
+
+### Linux/Mac Users
+
+1. **Run the Uninstall Script**
+   ```bash
+   ./uninstall.sh
+   ```
+
+2. **Follow the Prompts**
+   - Confirm uninstallation (y/n)
+   - Choose whether to keep your data (y/n)
+
+3. **What Gets Removed**
+   - Virtual environment (`venv/` folder)
+   - Launcher script (`run.sh`)
+   - Python cache files
+   - **Optional**: Training data, models, and logs
+
+4. **Manual Cleanup (Optional)**
+   After running the uninstall script, you can delete the entire project folder:
+   ```bash
+   cd ..
+   rm -rf studyquality_metrics
+   ```
+
+---
+
+## What Data is Preserved (by default)
+
+If you choose **NOT** to remove data, the following will be kept:
+- `data/` - Your session logs and training data
+- `models/` - Your trained ML models
+- `logs/` - Application logs
+
+This allows you to reinstall later without losing your data.
+
+---
+
+## Complete Removal
+
+To completely remove everything including data:
+
+1. Run the uninstall script
+2. When asked "Remove training data and session logs?", answer **y**
+3. Delete the project folder
+
+---
+
+## Reinstallation
+
+After uninstalling, you can reinstall anytime by:
+
+1. Downloading the project again (or keeping the folder)
+2. Running `setup.bat` (Windows) or `./setup.sh` (Linux/Mac)
+
+If you preserved your data, your trained models and session history will still be available!
+
+---
+
+## Troubleshooting
+
+### "Permission denied" error (Linux/Mac)
+```bash
+chmod +x uninstall.sh
+./uninstall.sh
+```
+
+### Script won't run (Windows)
+- Right-click `uninstall.bat` → "Run as administrator"
+
+### Manual uninstall
+If the script fails, manually delete:
+1. `venv/` folder
+2. `run.bat` or `run.sh`
+3. Desktop shortcut (if created)
+4. Optionally: `data/`, `models/`, `logs/` folders

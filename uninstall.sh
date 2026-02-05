@@ -1,101 +1,82 @@
 #!/bin/bash
-# AI Study Focus Monitor - Uninstall Script for macOS/Linux
+# AI Study Focus Analyzer - Unix Uninstall Script
+# This script removes all installed components
 
-echo "========================================"
-echo " AI Study Focus Monitor - Uninstall"
-echo "========================================"
-echo ""
-echo "This will remove the AI Study Focus Monitor from your system."
+echo "============================================================"
+echo "  AI Study Focus Analyzer - Uninstall Wizard"
+echo "============================================================"
 echo ""
 
-# Ask for confirmation
+echo "WARNING: This will remove the AI Study Focus Analyzer"
+echo "and all its components from your system."
+echo ""
 read -p "Are you sure you want to uninstall? (y/n): " confirm
-if [[ ! "$confirm" =~ ^[Yy]$ ]]; then
-    echo ""
-    echo "Uninstallation cancelled."
+if [ "$confirm" != "y" ] && [ "$confirm" != "Y" ]; then
+    echo "Uninstall cancelled."
     exit 0
 fi
-
-echo ""
-echo "[1/4] Checking if application is running..."
-if pgrep -f "main.py" > /dev/null; then
-    echo "WARNING: Study Monitor app is running. Please close it first."
-    read -p "Press Enter to continue after closing the app..."
-fi
-echo "[OK] No conflicts detected"
 echo ""
 
-# Ask about data backup
-echo "[2/4] Do you want to backup your study data before removing?"
-read -p "Backup data to Home directory? (y/n): " backup
-if [[ "$backup" =~ ^[Yy]$ ]]; then
-    echo "Backing up data to ~/StudyMonitorBackup..."
-    mkdir -p ~/StudyMonitorBackup
-    if [ -d "data/sessions" ]; then
-        cp -r data/sessions ~/StudyMonitorBackup/ 2>/dev/null
-    fi
-    if [ -d "data/reports" ]; then
-        cp -r data/reports ~/StudyMonitorBackup/ 2>/dev/null
-    fi
-    echo "[OK] Data backed up to ~/StudyMonitorBackup/"
+# Remove virtual environment
+echo "[1/5] Removing virtual environment..."
+if [ -d "venv" ]; then
+    rm -rf venv
+    echo "[OK] Virtual environment removed"
 else
-    echo "Skipping backup..."
+    echo "[SKIP] Virtual environment not found"
 fi
 echo ""
 
-# Remove pip installation if exists
-echo "[3/4] Removing pip installation (if any)..."
-pip3 uninstall -y study-focus-monitor >/dev/null 2>&1 || pip uninstall -y study-focus-monitor >/dev/null 2>&1
-echo "[OK] Pip package removed (if it was installed)"
-echo ""
-
-# Final confirmation
-echo "[4/4] Ready to delete application files"
-echo ""
-echo "The following will be deleted:"
-echo "  - Application code (all Python files)"
-echo "  - Configuration files"
-echo "  - Session data and reports (unless backed up)"
-echo "  - Dependencies will NOT be removed"
-echo ""
-read -p "Proceed with deletion? (y/n): " finalconfirm
-if [[ ! "$finalconfirm" =~ ^[Yy]$ ]]; then
-    echo ""
-    echo "Uninstallation cancelled."
-    exit 0
+# Ask about data removal
+echo "[2/5] User data..."
+read -p "Remove training data and session logs? (y/n): " remove_data
+if [ "$remove_data" = "y" ] || [ "$remove_data" = "Y" ]; then
+    if [ -d "data" ]; then
+        rm -rf data
+        echo "[OK] Data removed"
+    fi
+    if [ -d "models" ]; then
+        rm -rf models
+        echo "[OK] Models removed"
+    fi
+    if [ -d "logs" ]; then
+        rm -rf logs
+        echo "[OK] Logs removed"
+    fi
+else
+    echo "[SKIP] Data preserved"
 fi
-
-echo ""
-echo "Removing application files..."
 echo ""
 
-# Get the project directory
-PROJECT_DIR="$(cd "$(dirname "$0")" && pwd)"
-echo "Deleting: $PROJECT_DIR"
-
-# Navigate to parent and delete
-cd ..
-rm -rf "$PROJECT_DIR"
-
-if [ -d "$PROJECT_DIR" ]; then
-    echo ""
-    echo "ERROR: Could not delete all files. Please delete manually:"
-    echo "$PROJECT_DIR"
-    echo ""
-    exit 1
+# Remove launcher script
+echo "[3/5] Removing launcher script..."
+if [ -f "run.sh" ]; then
+    rm run.sh
+    echo "[OK] Launcher removed"
+else
+    echo "[SKIP] Launcher not found"
 fi
+echo ""
 
+# Remove Python cache
+echo "[4/5] Removing Python cache..."
+find . -type d -name "__pycache__" -exec rm -rf {} + 2>/dev/null
+find . -type f -name "*.pyc" -delete 2>/dev/null
+echo "[OK] Cache removed"
 echo ""
-echo "========================================"
-echo " Uninstallation Complete!"
-echo "========================================"
+
+# Final cleanup
+echo "[5/5] Final cleanup complete!"
 echo ""
-echo "AI Study Focus Monitor has been removed from your system."
+
+echo "============================================================"
+echo "  Uninstallation Complete!"
+echo "============================================================"
 echo ""
-if [[ "$backup" =~ ^[Yy]$ ]]; then
-    echo "Your data backup is saved at:"
-    echo "~/StudyMonitorBackup/"
-    echo ""
-fi
-echo "Thank you for using Study Focus Monitor!"
+echo "The AI Study Focus Analyzer has been removed from your system."
+echo ""
+echo "To reinstall, run: ./setup.sh"
+echo ""
+echo "You can safely delete this folder now if desired."
+echo "============================================================"
 echo ""

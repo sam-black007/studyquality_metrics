@@ -1,104 +1,90 @@
 @echo off
-REM AI Study Focus Monitor - Uninstall Script for Windows
+REM AI Study Focus Analyzer - Windows Uninstall Script
+REM This script removes all installed components
 
-echo ========================================
-echo  AI Study Focus Monitor - Uninstall
-echo ========================================
-echo.
-echo This will remove the AI Study Focus Monitor from your system.
+echo ============================================================
+echo   AI Study Focus Analyzer - Uninstall Wizard
+echo ============================================================
 echo.
 
-REM Ask for confirmation
-set /p confirm="Are you sure you want to uninstall? (Y/N): "
-if /i not "%confirm%"=="Y" (
-    echo.
-    echo Uninstallation cancelled.
+echo WARNING: This will remove the AI Study Focus Analyzer
+echo and all its components from your system.
+echo.
+set /p confirm="Are you sure you want to uninstall? (y/n): "
+if /i not "%confirm%"=="y" (
+    echo Uninstall cancelled.
     pause
     exit /b 0
 )
-
-echo.
-echo [1/4] Checking if application is running...
-tasklist /FI "IMAGENAME eq python.exe" 2>NUL | find /I /N "python.exe">NUL
-if "%ERRORLEVEL%"=="0" (
-    echo WARNING: Python processes are running. Please close the Study Monitor app first.
-    echo Press Ctrl+C to cancel, or
-    pause
-)
-echo [OK] No conflicts detected
 echo.
 
-REM Ask about data backup
-echo [2/4] Do you want to backup your study data before removing?
-set /p backup="Backup data to Desktop? (Y/N): "
-if /i "%backup%"=="Y" (
-    echo Backing up data to Desktop...
-    if exist "data\sessions" (
-        xcopy "data\sessions" "%USERPROFILE%\Desktop\StudyMonitorBackup\sessions\" /E /I /Y >NUL 2>&1
-    )
-    if exist "data\reports" (
-        xcopy "data\reports" "%USERPROFILE%\Desktop\StudyMonitorBackup\reports\" /E /I /Y >NUL 2>&1
-    )
-    echo [OK] Data backed up to Desktop\StudyMonitorBackup\
+REM Remove virtual environment
+echo [1/5] Removing virtual environment...
+if exist venv (
+    rmdir /s /q venv
+    echo [OK] Virtual environment removed
 ) else (
-    echo Skipping backup...
+    echo [SKIP] Virtual environment not found
 )
 echo.
 
-REM Remove pip installation if exists
-echo [3/4] Removing pip installation (if any)...
-pip uninstall -y study-focus-monitor >NUL 2>&1
-echo [OK] Pip package removed (if it was installed)
-echo.
-
-REM Final confirmation
-echo [4/4] Ready to delete application files
-echo.
-echo The following will be deleted:
-echo   - Application code (all Python files)
-echo   - Configuration files
-echo   - Session data and reports (unless backed up)
-echo   - Dependencies will NOT be removed
-echo.
-set /p finalconfirm="Proceed with deletion? (Y/N): "
-if /i not "%finalconfirm%"=="Y" (
-    echo.
-    echo Uninstallation cancelled.
-    pause
-    exit /b 0
+REM Ask about data removal
+echo [2/5] User data...
+set /p remove_data="Remove training data and session logs? (y/n): "
+if /i "%remove_data%"=="y" (
+    if exist data (
+        rmdir /s /q data
+        echo [OK] Data removed
+    )
+    if exist models (
+        rmdir /s /q models
+        echo [OK] Models removed
+    )
+    if exist logs (
+        rmdir /s /q logs
+        echo [OK] Logs removed
+    )
+) else (
+    echo [SKIP] Data preserved
 )
-
-echo.
-echo Removing application files...
 echo.
 
-REM Navigate to parent directory and delete project folder
-cd ..
-set FOLDER_PATH=%CD%\test file
-echo Deleting: %FOLDER_PATH%
-rmdir /s /q "%FOLDER_PATH%" 2>NUL
-
-if exist "%FOLDER_PATH%" (
-    echo.
-    echo ERROR: Could not delete all files. Please delete manually:
-    echo %FOLDER_PATH%
-    echo.
-    pause
-    exit /b 1
+REM Remove launcher script
+echo [3/5] Removing launcher script...
+if exist run.bat (
+    del run.bat
+    echo [OK] Launcher removed
+) else (
+    echo [SKIP] Launcher not found
 )
+echo.
 
-echo.
-echo ========================================
-echo  Uninstallation Complete!
-echo ========================================
-echo.
-echo AI Study Focus Monitor has been removed from your system.
-echo.
-if /i "%backup%"=="Y" (
-    echo Your data backup is saved at:
-    echo %USERPROFILE%\Desktop\StudyMonitorBackup\
-    echo.
+REM Remove desktop shortcut
+echo [4/5] Removing desktop shortcut...
+if exist "%USERPROFILE%\Desktop\AI Study Focus.lnk" (
+    del "%USERPROFILE%\Desktop\AI Study Focus.lnk"
+    echo [OK] Desktop shortcut removed
+) else (
+    echo [SKIP] Desktop shortcut not found
 )
-echo Thank you for using Study Focus Monitor!
+echo.
+
+REM Final cleanup
+echo [5/5] Final cleanup...
+if exist __pycache__ rmdir /s /q __pycache__
+if exist src\__pycache__ rmdir /s /q src\__pycache__
+echo [OK] Cleanup complete
+echo.
+
+echo ============================================================
+echo   Uninstallation Complete!
+echo ============================================================
+echo.
+echo The AI Study Focus Analyzer has been removed from your system.
+echo.
+echo To reinstall, run: setup.bat
+echo.
+echo You can safely delete this folder now if desired.
+echo ============================================================
 echo.
 pause

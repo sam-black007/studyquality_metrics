@@ -20,33 +20,46 @@ A local desktop AI system that monitors study focus using webcam-based face trac
 
 ## 🚀 Quick Start
 
-### 1. Install Dependencies
+### Automated Installation (Recommended)
 
-```bash
-pip install -r requirements.txt
+**Windows:**
+```cmd
+git clone https://github.com/sam-black007/studyquality_metrics.git
+cd studyquality_metrics
+setup.bat
 ```
 
-### 2. Collect Training Data (First Time Only)
-
+**Linux/Mac:**
 ```bash
-python collect_data.py
+git clone https://github.com/sam-black007/studyquality_metrics.git
+cd studyquality_metrics
+chmod +x setup.sh
+./setup.sh
 ```
 
-Follow the prompts to capture examples of "Study" and "Distraction" screens. Collect at least 50 samples per class.
+The setup script will automatically:
+- ✅ Check Python installation
+- ✅ Create virtual environment
+- ✅ Install all dependencies
+- ✅ Create necessary directories
+- ✅ Set up launcher scripts
 
-### 3. Train the Model (First Time Only)
+### First-Time Data Setup
 
-```bash
-python train_model.py
-```
+1. **Collect Training Data**
+   ```bash
+   python collect_data.py
+   ```
+   Collect at least 50 samples per class.
 
-This will train a MobileNetV2 model on your collected data.
+2. **Train the Model**
+   ```bash
+   python train_model.py
+   ```
 
-### 4. Run the Application
-
-```bash
-python main.py
-```
+3. **Run the Application**
+   - Windows: Double-click `run.bat` or run it from command prompt
+   - Linux/Mac: `./run.sh`
 
 ## 📊 How It Works
 
