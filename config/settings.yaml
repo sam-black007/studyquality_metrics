@@ -1,16 +1,20 @@
 # AI Study Focus Monitor - Configuration File
+# Optimized for low CPU/GPU usage to prevent throttling
 
-# Webcam settings
+# Webcam settings - Reduced for performance
 webcam:
   device_id: 0
-  fps: 30
+  fps: 15  # Reduced from 30 to save CPU (still smooth enough)
   width: 640
   height: 480
+  skip_frames: 2  # Process every 2nd frame to reduce load
 
-# Screen capture settings
+# Screen capture settings - Optimized intervals
 screen_capture:
-  interval_seconds: 7
+  interval_seconds: 10  # Increased from 7 to reduce CPU usage
   monitor_index: 0
+  resize_before_processing: true  # Resize to smaller size before ML
+  target_size: [640, 480]  # Smaller size for faster processing
 
 # Focus calculation
 focus:
@@ -40,6 +44,18 @@ model:
   classifier_path: "models/screen_classifier.h5"
   confidence_threshold: 0.6
   input_size: 224
+
+# Performance optimization (prevents CPU/GPU throttling)
+performance:
+  # Target max CPU usage
+  max_cpu_percent: 40
+  
+  # GPU settings
+  use_gpu: false  # Disable GPU to prevent graphics card throttling
+  
+  # Processing delays (seconds) to reduce continuous load
+  loop_sleep_delay: 0.5  # Sleep between monitoring cycles
+  heavy_task_delay: 0.5  # Extra sleep after ML/heavy processing
 
 # Logging
 logging:
